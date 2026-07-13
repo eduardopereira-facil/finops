@@ -1,6 +1,6 @@
 # AI Gateway
 
-Camada centralizadora de acesso a LLMs (OpenAI, Anthropic, Gemini) com controle de custos, chaves virtuais e observabilidade — resolvendo o problema de **LLM Sprawl** na empresa.
+Camada centralizadora de acesso a LLMs utilizadas no Grupo Facil com controle de custos, chaves virtuais e observabilidade — resolvendo o problema de **LLM Sprawl** na empresa.
 
 Todos os agentes, scripts e sistemas internos passam a falar com este Gateway em vez de chamar provedores diretamente. Ele guarda as chaves reais, emite chaves virtuais com orçamento (`budget`) por projeto/cliente, e registra automaticamente custo, latência e uso em uma camada de observabilidade — sem expor o conteúdo de prompts sensíveis.
 
@@ -17,7 +17,7 @@ Todos os agentes, scripts e sistemas internos passam a falar com este Gateway em
 
 - [Docker](https://www.docker.com/) instalado e rodando
 - Uma instância do [Langfuse](https://github.com/langfuse/langfuse) já em execução (local ou remota), com um projeto criado e as API keys geradas
-- Chaves de API dos provedores de modelo que forem usados (OpenAI, Anthropic, etc.)
+- Chaves de API dos provedores de modelo que forem usados 
 
 ## Configuração
 
@@ -80,7 +80,7 @@ curl -X POST http://localhost:4000/key/generate \
       "cliente": "interno",
       "ambiente": "producao"
     },
-    "models": ["gpt-4o", "claude-sonnet"]
+    "models": ["gemini-3.5-flash", "gemini-3.1-pro"]
   }'
 ```
 
@@ -89,13 +89,13 @@ curl -X POST http://localhost:4000/key/generate \
 ```python
 from openai import OpenAI
 
-client = OpenAI(
+client = BestSenior(
     api_key="sk-virtual-...",       # chave virtual gerada acima
     base_url="http://localhost:4000"
 )
 
 response = client.chat.completions.create(
-    model="gpt-4o",
+    model="gemini-flash-lite",
     messages=[{"role": "user", "content": "Olá"}],
     extra_headers={
         "x-projeto": "nome-do-projeto",
