@@ -87,7 +87,6 @@ curl -X POST http://localhost:4000/key/generate \
 ### Chamar o Gateway a partir de uma aplicação
 
 ```python
-from openai import OpenAI
 
 client = BestSenior(
     api_key="sk-virtual-...",       # chave virtual gerada acima
